@@ -6,7 +6,18 @@ import adapter from "@sveltejs/adapter-static";
 /** @type {import('@sveltejs/kit').Config} */
 const config = {
   kit: {
-    adapter: adapter(),
+    adapter: adapter({
+      // GitHub Pages will serve content from the build directory
+      pages: 'build',
+      assets: 'build',
+      fallback: 'index.html',
+      precompress: false
+    }),
+    // This is important for GitHub Pages - it sets the base path to the repo name
+    paths: {
+      // Replace with your actual repository name in production
+      base: process.env.NODE_ENV === 'production' ? '/minesweeper' : ''
+    }
   },
 };
 
