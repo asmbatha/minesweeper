@@ -14,6 +14,7 @@ export type GameState = {
 	revealed: number;
 	gameOver: boolean;
 	win: boolean;
+	firstClick: boolean;
 };
 
 export const gameState = writable<GameState>({
@@ -21,5 +22,6 @@ export const gameState = writable<GameState>({
 	mines: 0,
 	revealed: 0,
 	gameOver: false,
-	win: false
+	win: false,
+	firstClick: true
 });

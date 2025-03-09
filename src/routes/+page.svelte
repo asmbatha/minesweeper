@@ -1,7 +1,7 @@
 <script lang="ts">
   import { gameState } from '$lib/stores';
   import type { Cell, GameState } from '$lib/stores';
-  import { createBoard, revealCell } from '$lib/game';
+  import { createBoard, placeMines, revealCell } from '$lib/game';
 
   const DIFFICULTY = {
     BEGINNER: { width: 9, height: 9, mines: 10 },
@@ -18,16 +18,24 @@
       mines: difficulty.mines,
       revealed: 0,
       gameOver: false,
-      win: false
-    } as GameState);
+      win: false,
+      firstClick: true
+    });
   }
 
   function handleCellClick(x: number, y: number) {
     gameState.update(state => {
       if (state.gameOver) return state;
 
+      // Handle the first click - place mines after first click ensuring this cell and neighbors are safe
+      if (state.firstClick) {
+        placeMines(state.board, state.mines, x, y);
+        state.firstClick = false;
+      }
+
+      // Now handle the click normally
       if (state.board[y][x].isMine) {
-        state.board[y][x].detonated = true
+        state.board[y][x].detonated = true;
         state.gameOver = true;
         return state;
       }
