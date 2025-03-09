@@ -1,3 +1,5 @@
+[asmbatha.github.io/minesweeper](https://asmbatha.github.io/minesweeper/)
+
 # Tauri + SvelteKit
 
 This template should help get you started developing with Tauri and SvelteKit in Vite.
